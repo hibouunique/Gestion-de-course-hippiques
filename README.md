@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Gestion de courses hippiques
 
 ## Présentation du projet
@@ -123,7 +122,3 @@ Une course peut également être ouverte à tous les chevaux, sans restriction p
 - Contrôler la cohérence des résultats.
 - Valider définitivement l'arrivée d'une course.
 - Calculer les allocations gagnées par chaque cheval selon sa position.
-=======
-# Gestion-de-course-hippiques
-Une application effectuée en C# pour gérer la gestions des différents intervenants qui constituent le monde de courses hippiques 
->>>>>>> 8c06048fca15d1601eead512e4094b408f047024
