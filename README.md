@@ -9,7 +9,7 @@ Le projet repose sur une architecture en couches de type MVC et utilise Microsof
 
 ## Objectifs
 
-L'application doit permettre de :
+Cette application doit permettre de :
 
 - Gérer les chevaux et leurs informations.
 - Gérer les entraîneurs et consulter les chevaux qu'ils entraînent.
@@ -29,96 +29,67 @@ L'application doit permettre de :
 ![Git](https://img.shields.io/badge/Git-Version_Control-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)
 
-## Fonctionnalités
+## Schéma du Modèle Entité-Association (MEA)
 
-### Gestion des chevaux
+```mermaid
+erDiagram
+CHEVAL {
+	INTEGER id_cheval PK
+	VARCHAR(50) nom_cheval
+	VARCHAR(50) couleur_cheval
+	INTEGER(3) age_cheval
+	VARCHAR(50) specialite_cheval
+	VARCHAR(50) pere_cheval
+	VARCHAR(50) mere_cheval
+	VARCHAR(1) sexe_cheval
+}
+ENTRAINEUR {
+	INTEGER id_entraineur PK
+	VARCHAR(50) nom_entraineur
+	VARCHAR(50) prenom_entraineur
+	INT(3) age_entraineur
+	CHAR(1) civilite_entraineur
+	VARCHAR(50) localisation_entraineur
+}
+PROPRIETAIRE {
+	INTEGER id_proprietaire PK
+	VARCHAR(50) nom_proprietaire
+	VARCHAR(50) prenom_proprietaire
+	INTEGER(3) age_proprietaire
+	CHAR(1) civilite_proprietaire
+}
+JOCKEY {
+	INTEGER id_jockey PK
+	VARCHAR(50) nom_jockey
+	VARCHAR(50) prenom_jockey
+	INTEGER(3) age_jockey
+	CHAR(1) civilite_jockey
+}
+COURSE {
+	INTEGER id_course PK
+	VARCHAR(50) libelle_course
+	DATE date_course
+	VARCHAR(50) hippodrome_course
+	INTEGER(3) nb_max_chevaux_course
+	INTEGER(3) age_chevaux_course
+	CHAR(1) sexe_chevaux_course
+	INTEGER(10) allocation_1ere_course
+	INTEGER(10) allocation_2eme_course
+	INTEGER(10) allocation_3eme_course
+	INTEGER(10) allocation_4eme_course
+	INTEGER(10) allocation_5eme_course
+}
+PARTICIPER {
+	INT id_course PK, FK
+	INT id_jockey PK, FK
+	INT id_cheval PK, FK
+	INT classement
+}
 
-- Consulter la liste des chevaux.
-- Ajouter, modifier et supprimer un cheval.
-- Consulter la fiche détaillée d'un cheval.
-- Générer automatiquement un identifiant.
-- Associer un propriétaire et un entraîneur.
+COURSE ||--o{ PARTICIPER : concerner
+JOCKEY ||--o{ PARTICIPER : monter
+CHEVAL ||--o{ PARTICIPER : participer
 
-**Informations d'un cheval :**
-- Code
-- Nom
-- Couleur
-- Âge
-- Spécialité : galop, obstacles ou trot
-- Nom du père et de la mère
-- Sexe : mâle ou femelle
-- Propriétaire
-- Entraîneur
-
-### Gestion des entraîneurs
-
-- Consulter la liste des entraîneurs.
-- Ajouter, modifier et supprimer un entraîneur.
-- Consulter les chevaux associés à un entraîneur.
-- Accéder à la fiche d'un cheval par double-clic.
-
-**Informations d'un entraîneur :**
-- Code
-- Nom et prénom
-- Âge
-- Civilité
-- Localisation
-
-### Gestion des jockeys et propriétaires
-
-Les jockeys et les propriétaires sont intégrés à la base de données afin de permettre les associations avec les chevaux et les courses.
-
-**Jockeys :**
-- Code
-- Nom et prénom
-- Âge
-- Civilité
-
-**Propriétaires :**
-- Code
-- Nom et prénom
-- Âge
-- Civilité
-
-*Remarque : aucune interface de gestion spécifique n'est demandée pour ces deux catégories. Des jeux d'essai seront néanmoins intégrés.*
-
-### Gestion des courses
-
-- Consulter la liste des courses.
-- Ajouter et modifier une course.
-- Consulter les détails d'une course.
-- Définir les conditions d'admission des chevaux.
-- Définir les allocations financières des cinq premiers.
-
-**Informations d'une course :**
-- Code
-- Libellé
-- Date
-- Hippodrome
-- Nombre maximal de chevaux
-- Allocations des cinq premières places
-- Conditions d'âge et de sexe
-
-Une course peut également être ouverte à tous les chevaux, sans restriction particulière.
-
-### Gestion des engagements
-
-- Sélectionner un hippodrome.
-- Sélectionner une course.
-- Sélectionner un cheval.
-- Inscrire un cheval à une course.
-- Consulter la liste des chevaux engagés.
-
-**Contrôles d'engagement :**
-- Vérification de l'âge du cheval.
-- Vérification de son sexe.
-- Vérification du nombre maximal de participants.
-- Prévention des engagements incohérents ou en double.
-
-### Gestion des résultats
-
-- Saisir le classement des chevaux après une course.
-- Attribuer les cinq premières places.
-- Contrôler la cohérence des résultats.
-- Valider définitivement l'arrivée d'une course.
-- Calculer les allocations gagnées par chaque cheval selon sa position.
+PROPRIETAIRE ||--o{ CHEVAL : appartenir
+ENTRAINEUR ||--o{ CHEVAL : entrainer
+```
